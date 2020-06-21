@@ -8,7 +8,6 @@ func bubbleSort(numbers []int) []int {
 			}
 		}
 	}
-
 	return numbers
 }
 
@@ -22,6 +21,36 @@ func selectionSort(numbers []int) []int {
 			}
 		}
 		swap(numbers, wall, largestAt)
+	}
+
+	return numbers
+}
+
+func insertionSort(numbers []int) []int {
+	for i := 1; i < len(numbers); i++ {
+		toMove := numbers[i]
+		reverseIndex := i - 1
+
+		for reverseIndex >= 0 && numbers[reverseIndex] > toMove {
+			numbers[reverseIndex+1] = numbers[reverseIndex]
+			reverseIndex = reverseIndex - 1
+		}
+		numbers[reverseIndex+1] = toMove
+	}
+
+	return numbers
+}
+
+func shellSort(numbers []int) []int {
+	gap := len(numbers) / 2
+
+	for gap > 0 {
+		for i := gap; i < len(numbers); i++ {
+			for j := i; j >= gap && numbers[j] < numbers[j-gap]; j = j - gap {
+				swap(numbers, j, j-gap)
+			}
+		}
+		gap /= 2
 	}
 
 	return numbers

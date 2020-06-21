@@ -2,16 +2,27 @@ package main
 
 import (
 	"fmt"
+	"reflect"
+	"runtime"
 )
 
 func main() {
 
-	numbers := []int{22, 44, 11, 66, 33, 55}
-	fmt.Println("original              ", numbers)
+	unsorted := []int{22, 44, 11, 66, 33, 55}
+	run(unsorted, bubbleSort)
+	run(unsorted, selectionSort)
+	run(unsorted, insertionSort)
+	run(unsorted, shellSort)
+}
 
-	bubbleSortResult := bubbleSort(numbers)
-	selectionSortResult := selectionSort(numbers)
+func run(unsorted []int, algorithm func([]int) []int) {
+	unsortedCopy := make([]int, len(unsorted))
+	copy(unsortedCopy, unsorted)
+	result := algorithm(unsortedCopy)
+	fmt.Println(GetFunctionName(algorithm) + " result:")
+	fmt.Println(result)
+}
 
-	fmt.Println("bubble sort result    ", bubbleSortResult)
-	fmt.Println("selection sort result ", selectionSortResult)
+func GetFunctionName(i interface{}) string {
+	return runtime.FuncForPC(reflect.ValueOf(i).Pointer()).Name()
 }
