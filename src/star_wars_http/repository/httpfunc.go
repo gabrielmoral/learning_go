@@ -12,6 +12,7 @@ func get(url string, v interface{}) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer resp.Body.Close()
 
 	body, readErr := ioutil.ReadAll(resp.Body)
 	if readErr != nil {
